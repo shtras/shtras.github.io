@@ -148,14 +148,6 @@ function formatTime(val) {
     return time;
 }
 
-function getRefValue(value) {
-    return $("#ref_"+value).val();
-}
-
-function getDesValue(value) {
-    return $("#des_"+value).val();
-}
-
 function calcTrain(train, length, hours) {
     var condition = 100 - (100 - train.reliability)*hours/24;
     var averageCond = (100-condition)/2+condition;
@@ -165,36 +157,12 @@ function calcTrain(train, length, hours) {
     return {time: resTime, cond: condition};
 }
 
-function recalc() {
-    var wTime = getTime("#wait_time");
-    var rtt = getTime("#rtt");
-    var oneWayTime = (rtt-wTime)/2;
-    var refSpd = getRefValue("speed");
-    var desSpd = getDesValue("speed");
-    var refAcc = getRefValue("acc");
-    var desAcc = getDesValue("acc");
-    var hours = parseInt($("#hours").val());
-    var desCond = 100-(100-getDesValue("reliability"))*hours/24;
-    var averageCond = (100-desCond)/2+desCond;
-    desSpd = desSpd*averageCond/100;
-    var accTime = refSpd/refAcc;
-    var length = refAcc*accTime*accTime/2+refSpd*(oneWayTime-accTime);
-    var desAccTime = desSpd/desAcc;
-    var resTime = (length+desSpd*desAccTime-desAcc*desAccTime*desAccTime/2)/desSpd*2 + wTime;
-    var ph1 = parseInt($("#price").val())*(3600/rtt)*getRefValue("wagons");
-    var ph2 = parseInt($("#price").val())*(3600/resTime)*getDesValue("wagons");
-    $("#res").html('Reference income/h: '+ph1.toFixed(2)+'<br/>'+
-                   'Average target income/h: '+ph2.toFixed(2)+'<br/>'+
-                   'Net income: '+(ph2*hours).toFixed(2)+'<br/>'+
-                   'Average trip time: '+formatTime(resTime)+'<br/>'+
-                   'Condition in the end: '+desCond.toFixed(2)+'<br/>');
-}
-
 function updateLength(){
+    var cond = parseInt($("#cond_base").val());
     var wTime = getTime("#wait_time");
     var rtt = getTime("#rtt");
     var oneWayTime = (rtt-wTime)/2;
-    var speed = $("#speed_base").val();
+    var speed = $("#speed_base").val()*cond/100;
     var acc = $("#acc_base").val();
     var hours = parseInt($("#hours").val());
     var accTime = speed/acc;
@@ -330,6 +298,8 @@ function registerCallbacks() {
     $("#wait_time").change(function(){updateAll();});
     $("#rtt").change(function(){updateAll();});
     $("#price").change(function(){updateAll();});
+    $("#cond_base").change(function(){updateAll();});
+    $("#hours").change(function(){updateAll();});
     $("#recalc").click(function(){updateAll();});
     $("#add_train").click(function(){addTrain();});
 }
