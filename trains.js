@@ -146,7 +146,7 @@ var trains = {
     heracles: {
         name: 'Heracles',
         speed: 85,
-        acc: 3,
+        acc: 1,
         wagons: 10,
         reliability: 80,
         price: 350000,
