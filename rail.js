@@ -4,78 +4,126 @@ var trains = {
         speed: 60,
         acc: 9,
         wagons: 3,
+        reliability: 60,
+        price: 15000,
+        service: 0,
     },
     raven: {
         name: 'Raven',
         speed: 85,
         acc: 2,
         wagons: 4,
+        reliability: 50,
+        price: 35000,
+        service: 0,
     },
     rhino: {
         name: 'Rhinoceros',
         speed: 70,
         acc: 18,
         wagons: 4,
+        reliability: 70,
+        price: 70000,
+        service: 0,
     },
     donkey: {
         name: 'Donkey',
         speed: 60,
         acc: 2,
-        wagons: 6,
+        wagons: 7,
+        reliability: 40,
+        price: 100000,
+        service: 0,
     },
     falcon: {
         name: 'Falcon',
         speed: 160,
         acc: 19,
         wagons: 4,
+        reliability: 60,
+        price: 135000,
+        service: 0,
     },
     mole: {
         name: 'Mole',
         speed: 120,
         acc: 10,
         wagons: 5,
+        reliability: 80,
+        price: 150000,
+        service: 0,
+    },
+    kite: {
+        name: 'Red Kite',
+        speed: 100,
+        acc: 6,
+        wagons: 6,
+        reliability: 95,
+        price: 0,
+        service: 0,
     },
     bat: {
         name: 'Bat',
         speed: 95,
         acc: 13,
         wagons: 6,
+        reliability: 50,
+        price: 165000,
+        service: 0,
+    },
+    panther: {
+        name: 'Panther',
+        speed: 180,
+        acc: 3,
+        wagons: 5,
+        reliability: 85,
+        price: 175000,
+        service: 0,
     },
     bear: {
         name: 'Black bear',
         speed: 75,
         acc: 13,
         wagons: 8,
-    },
-    panther: {
-        name: 'Panther',
-        speed: 180,
-        acc: 3,
-        wagons: 5
+        reliability: 60,
+        price: 200000,
+        service: 0,
     },
     lynx: {
         name: 'Lynx',
         speed: 160,
         acc: 17,
         wagons: 5,
+        reliability: 80,
+        price: 150000,
+        service: 0,
     },
     boar: {
         name: 'Boar',
         speed: 130,
         acc: 11,
         wagons: 6,
+        reliability: 50,
+        price: 225000,
+        service: 0,
     },
     elephant: {
         name: 'Elephant',
         speed: 65,
         acc: 3,
         wagons: 11,
+        reliability: 40,
+        price: 300000,
+        service: 0,
     },
     bull: {
         name: 'Bull',
         speed: 110,
         acc: 5,
         wagons: 7,
+        reliability: 90,
+        price: 0,
+        service: 0,
     },
 };
 
@@ -83,6 +131,9 @@ var values = [
     'speed',
     'acc',
     'wagons',
+    'reliability',
+    'price',
+    'service',
 ];
 
 function getTime(label) {
@@ -109,15 +160,25 @@ function recalc() {
     var wTime = getTime("#wait_time");
     var rtt = getTime("#rtt");
     var oneWayTime = (rtt-wTime)/2;
-    var accTime = getRefValue("speed")/getRefValue("acc");
-    var length = getRefValue("acc")*accTime*accTime/2+getRefValue("speed")*(oneWayTime-accTime);
-    var desAccTime = getDesValue("speed")/getDesValue("acc");
-    var resTime = (length+getDesValue("speed")*desAccTime-getDesValue("acc")*desAccTime*desAccTime/2)/getDesValue("speed")*2 + wTime;
-    $("#result").val(formatTime(resTime));
+    var refSpd = getRefValue("speed");
+    var desSpd = getDesValue("speed");
+    var refAcc = getRefValue("acc");
+    var desAcc = getDesValue("acc");
+    var hours = parseInt($("#hours").val());
+    var desCond = 100-(100-getDesValue("reliability"))*hours/24;
+    var averageCond = (100-desCond)/2+desCond;
+    desSpd = desSpd*averageCond/100;
+    var accTime = refSpd/refAcc;
+    var length = refAcc*accTime*accTime/2+refSpd*(oneWayTime-accTime);
+    var desAccTime = desSpd/desAcc;
+    var resTime = (length+desSpd*desAccTime-desAcc*desAccTime*desAccTime/2)/desSpd*2 + wTime;
     var ph1 = parseInt($("#price").val())*(3600/rtt)*getRefValue("wagons");
     var ph2 = parseInt($("#price").val())*(3600/resTime)*getDesValue("wagons");
-    $("#ph1").val(ph1.toFixed(2));
-    $("#ph2").val(ph2.toFixed(2));
+    $("#res").html('Reference income/h: '+ph1.toFixed(2)+'<br/>'+
+                   'Average target income/h: '+ph2.toFixed(2)+'<br/>'+
+                   'Net income: '+(ph2*hours).toFixed(2)+'<br/>'+
+                   'Average trip time: '+formatTime(resTime)+'<br/>'+
+                   'Condition in the end: '+desCond.toFixed(2)+'<br/>');
 }
 
 function initAll() {
@@ -125,6 +186,7 @@ function initAll() {
         var train = trains[i];
         $("#ref_train").append($("<option></option>").attr("value", i).text(train.name));
         $("#des_train").append($("<option></option>").attr("value", i).text(train.name));
+        train.service = Math.round(train.price*0.17);
     }
     
     for (var i in values) {
@@ -168,7 +230,7 @@ function registerCallbacks() {
     $("#wait_time").change(function(){recalc();});
     $("#rtt").change(function(){recalc();});
     $("#price").change(function(){recalc();});
-    $("#recalc").change(function(){recalc();});
+    $("#recalc").click(function(){recalc();});
 }
 
 $(document).ready(function() {
