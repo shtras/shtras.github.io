@@ -120,7 +120,7 @@ function recalc() {
     $("#ph2").val(ph2.toFixed(2));
 }
 
-function initSelects() {
+function initAll() {
     for (var i in trains) {
         var train = trains[i];
         $("#ref_train").append($("<option></option>").attr("value", i).text(train.name));
@@ -168,9 +168,10 @@ function registerCallbacks() {
     $("#wait_time").change(function(){recalc();});
     $("#rtt").change(function(){recalc();});
     $("#price").change(function(){recalc();});
+    $("#recalc").change(function(){recalc();});
 }
 
 $(document).ready(function() {
-    initSelects();
+    initAll();
     registerCallbacks();
 });
