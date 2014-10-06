@@ -5,28 +5,32 @@
 <body>
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 <script src="rail.js"></script>
+<link href="rail.css" rel="stylesheet" media="all" />
+<div class="box">
+    <div class="train_details" id="reference">
+    <h2>Please fill in the following to define your route:</h2>
+    Select reference train: 
+    <select id="train_base"></select>
+    <br/>
+    </div><br/>
+    Waiting time (mm:ss): 
+    <input id="wait_time"/>
+    <br/>
+    Total time (mm:ss): 
+    <input id="rtt"/>
+    <br/>
+    Route length: 
+    <input id="length"/>
+    <br/>    
+</div>
 Resource price: 
 <input id="price"/>
 </br>
-<div id="reference">
-Select reference train: 
-<select id="ref_train"></select>
-<br/>
-</div>
-Waiting time (mm:ss): 
-<input id="wait_time"/>
-<br/>
-Total time (mm:ss): 
-<input id="rtt"/>
-<br/>
 Hours ahead: 
 <input id="hours" value="0" />
 <br/>
-<div id="desired">
-Select target train: 
-<select id="des_train"></select>
-</br>
-</div>
+<input type="submit" id="add_train" value="Add train"/>
+<div id="trains_select"/>
 <input type="submit" id="recalc" value="Recalc"/>
 <div id="res"></div>
 </body>
