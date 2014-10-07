@@ -42,6 +42,14 @@ function updateLength(){
     $("#length").val(length.toFixed(2));
 }
 
+function approximateServicing(price, condition){
+    if (condition>=99) {
+        return 0;
+    }
+    var percentage = (0.25*(100-condition)+9.5)/100;
+    return price*percentage;
+}
+
 function updateResult(id){
     var train = {
         speed: parseInt($("#speed_"+id).val()),
@@ -55,11 +63,17 @@ function updateResult(id){
     var time = res.time;
     var cond = res.cond;
     time += getTime('#wait_time');
-    var perHour = parseInt($("#price").val())*(3600/time)*train.wagons;
-    $("#income_"+id).val(perHour.toFixed(2));
-    $("#net_income_"+id).val((perHour*hours).toFixed(2));
+    var resPrice = parseInt($("#price").val());
+    var trainPrice = parseInt($("#price_"+id).val());
+    var perHour = resPrice*(3600/time)*train.wagons;
+    var income = perHour*hours;
+    var servCost = approximateServicing(trainPrice, cond);
+    $("#incomeph_"+id).val(perHour.toFixed(2));
+    $("#income_"+id).val((income).toFixed(2));
     $("#condition_"+id).val(cond.toFixed(2));
     $("#trip_time_"+id).val(formatTime(time));
+    $("#servcost_"+id).val(servCost.toFixed(0));
+    $("#net_income_"+id).val((income-servCost).toFixed(2));
 }
 
 function removeTrain(id){
@@ -69,14 +83,14 @@ function removeTrain(id){
 function addResultBlock(id){
     var block = $("<div/>")
         .append($("<div/>").attr("class", "left")
-            .append(document.createTextNode('Avg income')))
+            .append(document.createTextNode('Avg income/h')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'income_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('id', 'incomeph_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
-            .append(document.createTextNode('Net Income')))
+            .append(document.createTextNode('Total Income')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'net_income_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('id', 'income_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Avg trip time')))
@@ -86,7 +100,17 @@ function addResultBlock(id){
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Condition')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'condition_'+id).attr('readonly', '')));
+            .append($("<input/>").attr('id', 'condition_'+id).attr('readonly', '')))
+        .append($("<br/>"))
+        .append($("<div/>").attr("class", "left")
+            .append(document.createTextNode('Service cost')))
+        .append($("<div/>").attr("class", "right")
+            .append($("<input/>").attr('id', 'servcost_'+id).attr('readonly', '')))
+        .append($("<br/>"))
+        .append($("<div/>").attr("class", "left")
+            .append(document.createTextNode('Net Income')))
+        .append($("<div/>").attr("class", "right")
+            .append($("<input/>").attr('id', 'net_income_'+id).attr('readonly', '')));
            
     return block;
 }
