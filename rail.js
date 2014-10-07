@@ -71,22 +71,22 @@ function addResultBlock(id){
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Avg income')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'income_'+id)))
+            .append($("<input/>").attr('id', 'income_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Net Income')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'net_income_'+id)))
+            .append($("<input/>").attr('id', 'net_income_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Avg trip time')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'trip_time_'+id)))
+            .append($("<input/>").attr('id', 'trip_time_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Condition')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'condition_'+id)));
+            .append($("<input/>").attr('id', 'condition_'+id).attr('readonly', '')));
            
     return block;
 }

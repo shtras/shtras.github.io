@@ -4,3 +4,4 @@ div.train_details {border: 1px solid #69b; margin: 2px; display: inline-block; }
 div.left{float: left; width: 100px; }
 div.left1{float: left; width: 150px; }
 div.right{float: left; }
+input[readonly]{background-color: cyan; }
