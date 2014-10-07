@@ -106,7 +106,7 @@ function addTrain() {
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode(value+': '))
         ).append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr("id", value+'_'+myCount).change(function(){updateResult(myCount)}))
+            .append($("<input/>").attr("id", value+'_'+myCount).change(function(){updateResult(myCount);}))
         ).append($("<br/>"));
     }
     trainBlock.append($("<input/>").attr('type', 'submit').val('Remove').click(function(){removeTrain(myCount);}));
@@ -136,7 +136,7 @@ function initAll() {
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode(value+': '))
         ).append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr("id", value+"_base").change(function(){udateAll()}))
+            .append($("<input/>").attr("id", value+"_base").change(function(){udateAll();}))
         ).append($("<br/>"));
     }
     
@@ -144,7 +144,7 @@ function initAll() {
         var value = values[i];
         $("#desired")
         .append(document.createTextNode(value+': '))
-        .append($("<input/>").attr("id", "des_"+value).change(function(){udateAll()}));
+        .append($("<input/>").attr("id", "des_"+value).change(function(){udateAll();}));
     }
     updateValues('base');
 }
