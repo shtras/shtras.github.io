@@ -19,33 +19,25 @@
 <link href="rail.css" rel="stylesheet" media="all" />
 <div class="box">
     <div class="train_details" id="reference">
-    <h2>Please fill in the following to define your route:</h2>
+    <h2>Route definition</h2>
     Select reference train: 
     <select id="train_base"></select>
     <br/>
     </div><br/>
-    Condition: 
-    <input id="cond_base" value="100" />
-    <br/>
-    Waiting time (mm:ss): 
-    <input id="wait_time"/>
-    <br/>
-    Total time (mm:ss): 
-    <input id="rtt"/>
-    <br/>
-    Route length: 
-    <input id="length"/>
-    <br/>    
+    <div class="left1">Condition: </div><div class="right"><input id="cond_base" value="100" /></div><br/>
+    <div class="left1">Waiting time (mm:ss): </div><div class="right"><input id="wait_time"/></div><br/>
+    <div class="left1">Total time (mm:ss): </div><div class="right"><input id="rtt"/></div><br/>
+    <div class="left1">Route length: </div><div class="right"><input id="length"/></div>
 </div>
-Resource price: 
-<input id="price"/>
-</br>
-Hours ahead: 
-<input id="hours" value="0" />
+<div class="box">
+<h2>Calculate based on</h2>
+<div class="left1">Resource price: </div><div class="right"><input id="price"/></div><br/>
+<div class="left1">Hours ahead: </div><div class="right"><input id="hours" value="0" /></div><br/>
+<div class="left1">Initial condition: </div><div class="right"><input id="init_cond" value="100" /></div>
+</div>
 <br/>
-<input type="submit" id="add_train" value="Add train"/>
+<input type="submit" id="add_train" value="Add train"/><input type="submit" id="recalc" value="Recalc"/>
 <div id="trains_select"/>
-<input type="submit" id="recalc" value="Recalc"/>
 <div id="res"></div>
 </body>
 </html>

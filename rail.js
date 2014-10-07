@@ -20,8 +20,9 @@ function formatTime(val) {
 }
 
 function calcTrain(train, length, hours) {
-    var condition = 100 - (100 - train.reliability)*hours/24;
-    var averageCond = (100-condition)/2+condition;
+    var init_cond = parseInt($("#init_cond").val());
+    var condition = init_cond - (100 - train.reliability)*hours/24;
+    var averageCond = (init_cond-condition)/2+condition;
     var accTime = train.speed/train.acc;
     var speed = train.speed*averageCond/100;
     var resTime = (length+speed*accTime-train.acc*accTime*accTime/2)/speed*2;
@@ -38,7 +39,7 @@ function updateLength(){
     var hours = parseInt($("#hours").val());
     var accTime = speed/acc;
     var length = acc*accTime*accTime/2+speed*(oneWayTime-accTime);
-    $("#length").val(length);
+    $("#length").val(length.toFixed(2));
 }
 
 function updateResult(id){
@@ -170,6 +171,7 @@ function registerCallbacks() {
     $("#rtt").change(function(){updateAll();});
     $("#price").change(function(){updateAll();});
     $("#cond_base").change(function(){updateAll();});
+    $("#init_cond").change(function(){updateAll();});
     $("#hours").change(function(){updateAll();});
     $("#recalc").click(function(){updateAll();});
     $("#add_train").click(function(){addTrain();});
