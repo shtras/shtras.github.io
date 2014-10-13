@@ -4,7 +4,7 @@ var values = [
     'wagons',
     'reliability',
     'price',
-    'slots',
+    'slots'
 ];
 
 var trainCount = 0;
@@ -14,7 +14,7 @@ var firstResultIdx = -1;
 
 function getTime(label) {
     var parts = $(label).val().split(':');
-    return parseInt(parts[0])*60+parseInt(parts[1]);
+    return parseInt(parts[0], 10)*60+parseInt(parts[1], 10);
 }
 
 function formatTime(val) {
@@ -45,7 +45,7 @@ function clear() {
     while (stopCount > 2) {
         removeStop(1);
     }
-    for (i=0; i<trainCount; ++i) {
+    for (var i=0; i<trainCount; ++i) {
         removeTrain(i);
     }
     trainCount = 0;    
@@ -54,7 +54,6 @@ function clear() {
 function load() {
     $('#load_box').hide();
     clear();
-    var test = $('#load_text').val();
     var data = JSON.parse($('#load_text').val());
     deserializeTrain('base', data.train);
     var i;
@@ -85,7 +84,7 @@ function save() {
         hours: $('#hours').val(),
         init_cond: $('#init_cond').val(),
         stops: [],
-        trains: [],
+        trains: []
     };
     var i;
     for (i=1; i<stopCount; ++i) {
@@ -101,7 +100,7 @@ function save() {
 }
 
 function calcTrain(train, length, hours) {
-    var init_cond = parseInt($("#init_cond").val());
+    var init_cond = parseInt($("#init_cond").val(), 10);
     var condition = init_cond - (100 - train.reliability)*hours/24;
     var averageCond = (init_cond-condition)/2+condition;
     var accTime = train.speed/train.acc;
@@ -112,13 +111,12 @@ function calcTrain(train, length, hours) {
 }
 
 function updateLength(){
-    var cond = parseInt($("#cond_base").val());
+    var cond = parseInt($("#cond_base").val(), 10);
     var wTime = getTime("#wait_time");
     var rtt = getTime("#rtt");
     var netTime = (rtt-wTime);
     var speed = $("#speed_base").val()*cond/100;
     var acc = $("#acc_base").val();
-    var hours = parseInt($("#hours").val());
     var accTime = speed/acc;
     //(a*t1^2/2)*numStops + v*t2
     //t2 = t - t1*numStops;
@@ -143,11 +141,11 @@ function updateResult(id){
         return;
     }
     var train = {
-        speed: parseInt($("#speed_"+id).val()),
-        acc: parseInt($("#acc_"+id).val()),
-        reliability: parseInt($("#reliability_"+id).val()),
-        wagons: parseInt($("#wagons_"+id).val()),
-        slots: parseInt($("#slots_"+id).val()),
+        speed: parseInt($("#speed_"+id).val(), 10),
+        acc: parseInt($("#acc_"+id).val(), 10),
+        reliability: parseInt($("#reliability_"+id).val(), 10),
+        wagons: parseInt($("#wagons_"+id).val(), 10),
+        slots: parseInt($("#slots_"+id).val(), 10)
     };
     var length = parseFloat($("#length").val());
     var hours = $("#hours").val();
@@ -157,9 +155,9 @@ function updateResult(id){
     time += getTime('#wait_time');
     var resPrice = 0;
     for (var i=1; i<stopCount; ++i) {
-        resPrice += parseInt($('#resprice_'+i).val());
+        resPrice += parseInt($('#resprice_'+i).val(), 10);
     }
-    var trainPrice = parseInt($("#price_"+id).val());
+    var trainPrice = parseInt($("#price_"+id).val(), 10);
     var perHour = resPrice*(3600/time)*train.wagons;
     var income = perHour*hours;
     var servCost = approximateServicing(trainPrice, cond)/train.slots;
@@ -271,7 +269,8 @@ function removeStop() {
 
 function createTrainSelect(id, remButton) {
     var select = $("<select/>").attr("id", 'train_'+id).change(function(){updateValues(id);updateResult(id);});
-    for (var i in trains) {
+    var i;
+    for (i in trains) {
         var train = trains[i];
         select.append($("<option></option>").attr("value", i).text(train.name));
     }
@@ -283,7 +282,7 @@ function createTrainSelect(id, remButton) {
         })).append($('<br/>'));
     
     var detailsDiv = $('<div/>').attr('id', 'details_'+id);
-    for (var i in values) {
+    for (i in values) {
         var value = values[i];
         detailsDiv
         .append($("<div/>").attr("class", "left")
