@@ -76,7 +76,7 @@ function updateResult(id){
     var trainPrice = parseInt($("#price_"+id).val());
     var perHour = resPrice*(3600/time)*train.wagons;
     var income = perHour*hours;
-    var servCost = approximateServicing(trainPrice, cond);
+    var servCost = approximateServicing(trainPrice, cond)/train.slots;
     var tonsPerHour = (3600/time)*train.wagons/train.slots;
     var tons = tonsPerHour * hours;
     $("#incomeph_"+id).val(perHour.toFixed(2));
@@ -121,7 +121,7 @@ function addResultBlock(id){
             .append($("<input/>").attr('id', 'condition_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
-            .append(document.createTextNode('Service cost')))
+            .append(document.createTextNode('Service/slot')))
         .append($("<div/>").attr("class", "right")
             .append($("<input/>").attr('id', 'servcost_'+id).attr('readonly', '')))
         .append($("<br/>"))
