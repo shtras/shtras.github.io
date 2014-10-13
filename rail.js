@@ -187,7 +187,7 @@ function createTrainSelect(id, remButton) {
     detailsDiv.hide();
     trainBlock.append(detailsDiv);
     if (remButton) {
-        trainBlock.append($("<input/>").attr('type', 'submit').val('Remove').click(function(){removeTrain(myCount);}));
+        trainBlock.append($("<input/>").attr('type', 'submit').val('Remove').click(function(){removeTrain(id);}));
         trainBlock.append(addResultBlock(id));
     }
     return trainBlock;
