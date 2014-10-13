@@ -144,7 +144,7 @@ function addStop() {
 }
 
 function removeStop() {
-    if (stopCount == 1) {
+    if (stopCount == 2) {
         return;
     }
     --stopCount;
@@ -203,23 +203,6 @@ function updateAll() {
 function initAll() {
 
     var trainBlock = createTrainSelect('base', false);
-/*
-    for (var i in trains) {
-        var train = trains[i];
-        $("#train_base").append($("<option></option>").attr("value", i).text(train.name));
-        train.service = Math.round(train.price*0.17);
-    }
-    
-    for (var i in values) {
-        var value = values[i];
-        $("#reference")
-        .append($("<div/>").attr("class", "left")
-            .append(document.createTextNode(value+': '))
-        ).append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr("id", value+"_base").change(function(){udateAll();}))
-        ).append($("<br/>"));
-    }
-*/
     $('#ref_train').append(trainBlock);
     for (var i in values) {
         var value = values[i];
