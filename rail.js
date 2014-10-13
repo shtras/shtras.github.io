@@ -5,6 +5,7 @@ var values = [
     'reliability',
     'price',
     'service',
+    'slots',
 ];
 
 var trainCount = 0;
@@ -60,6 +61,7 @@ function updateResult(id){
         acc: parseInt($("#acc_"+id).val()),
         reliability: parseInt($("#reliability_"+id).val()),
         wagons: parseInt($("#wagons_"+id).val()),
+        slots: parseInt($("#slots_"+id).val()),
     };
     var length = parseFloat($("#length").val());
     var hours = $("#hours").val();
@@ -81,6 +83,7 @@ function updateResult(id){
     $("#trip_time_"+id).val(formatTime(time));
     $("#servcost_"+id).val(servCost.toFixed(0));
     $("#net_income_"+id).val((income-servCost).toFixed(2));
+    $("#net_income_slot_"+id).val((income/train.slots-servCost).toFixed(2));
 }
 
 function removeTrain(id){
@@ -117,7 +120,12 @@ function addResultBlock(id){
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Net Income')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'net_income_'+id).attr('readonly', '')));
+            .append($("<input/>").attr('id', 'net_income_'+id).attr('readonly', '')))
+        .append($("<br/>"))
+        .append($("<div/>").attr("class", "left")
+            .append(document.createTextNode('Net Inc/slot')))
+        .append($("<div/>").attr("class", "right")
+            .append($("<input/>").attr('id', 'net_income_slot_'+id).attr('readonly', '')));
            
     return block;
 }
@@ -153,17 +161,24 @@ function addTrain() {
         select.append($("<option></option>").attr("value", i).text(train.name));
     }
     var trainBlock = $("<div/>").attr("class", "train_details").attr("id", "block_"+myCount).append(select)
-        .append($("<br/>"));
+        .append($("<br/>"))
+        .append($('<a/>').text('Show/hide details').attr('href', '#').click(function(event){
+            event.preventDefault();
+            $('#details_'+myCount).toggle();
+        })).append($('<br/>'));
     
+    var detailsDiv = $('<div/>').attr('id', 'details_'+myCount);
     for (var i in values) {
         var value = values[i];
-        trainBlock
+        detailsDiv
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode(value+': '))
         ).append($("<div/>").attr("class", "right")
             .append($("<input/>").attr("id", value+'_'+myCount).change(function(){updateResult(myCount);}))
         ).append($("<br/>"));
     }
+    detailsDiv.hide();
+    trainBlock.append(detailsDiv);
     trainBlock.append($("<input/>").attr('type', 'submit').val('Remove').click(function(){removeTrain(myCount);}));
     trainBlock.append(addResultBlock(myCount));
     $("#trains_select").append(trainBlock);
@@ -207,6 +222,7 @@ function initAll() {
 
 function updateValues(suffix) {
     var train = trains[$("#train_"+suffix+" option:selected").val()];
+    train.slots = train.slots||1;
     if (!train) {
         return;
     }

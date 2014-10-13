@@ -169,6 +169,7 @@ var trains = {
         reliability: 80,
         price: 1000000,
         service: 0,
+        slots: 2,
     },
     osiris: {
         name: 'Osiris',
@@ -232,5 +233,6 @@ var trains = {
         reliability: 80,
         price: 2000000,
         service: 0,
+        slots: 3,
     },
 };
