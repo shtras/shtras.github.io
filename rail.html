@@ -1,5 +1,7 @@
 <html>
 <head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
 <title>Rail Nation Calculator</title>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -42,6 +44,14 @@
 <br/>
 <input type="submit" id="add_train" value="Add train"/><input type="submit" id="recalc" value="Recalc"/>
 <div id="trains_select"></div>
+<br/>
+<input type="submit" id="save" value="Save comparison"/>
+<input type="submit" id="load" value="Load comparison"/>
+<br/>
+<div id="load_box" hidden=true>
+<textarea id="load_text" rows="20" cols="100"></textarea><br/>
+<input type="submit" id="do_load" value="load" />
+</div>
 <div class="box">
 <h3>Usage:</h3>
 <ul>

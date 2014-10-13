@@ -23,6 +23,84 @@ function formatTime(val) {
     return time;
 }
 
+function showLoad() {
+    $('#load_box').show();
+}
+
+function serializeTrain(id) {
+    var res = {name: $("#train_"+id+" option:selected").val()};
+    for (var i in values) {
+        res[values[i]] = $('#'+values[i]+'_'+id).val();
+    }
+    return res;
+}
+
+function deserializeTrain(id, data) {
+    $('#train_'+id).val(data.name);
+    for (var i in values) {
+        $('#'+values[i]+'_'+id).val(data[values[i]]);
+    }
+}
+
+function clear() {
+    while (stopCount > 2) {
+        removeStop(1);
+    }
+    for (i=0; i<trainCount; ++i) {
+        removeTrain(i);
+    }
+    trainCount = 0;    
+}
+
+function load() {
+    $('#load_box').hide();
+    clear();
+    var test = $('#load_text').val();
+    var data = JSON.parse($('#load_text').val());
+    deserializeTrain('base', data.train);
+    var i;
+    for (i=0; i<data.trains.length; ++i) {
+        addTrain();
+        deserializeTrain(i, data.trains[i]);
+    }
+    $('#resprice_'+(1)).val(data.stops[0].price);
+    for (i=1; i<data.stops.length; ++i) {
+        addStop();
+        $('#resprice_'+(i+1)).val(data.stops[i].price);
+    }
+    
+    $('#cond_base').val(data.cond);
+    $('#wait_time').val(data.wait_time);
+    $('#rtt').val(data.rtt);
+    $('#hours').val(data.hours);
+    $('#init_cond').val(data.init_cond);
+    updateAll();
+}
+
+function save() {
+    var res = {
+        train: serializeTrain('base'),
+        cond: $('#cond_base').val(),
+        wait_time: $('#wait_time').val(),
+        rtt: $('#rtt').val(),
+        hours: $('#hours').val(),
+        init_cond: $('#init_cond').val(),
+        stops: [],
+        trains: [],
+    };
+    var i;
+    for (i=1; i<stopCount; ++i) {
+        res.stops.push({price: $('#resprice_'+i).val()});
+    }
+    for (i=0; i<trainCount; ++i) {
+        if (!$("#block_"+i).length) {
+            continue;
+        }
+        res.trains.push(serializeTrain(i));
+    }
+    alert(JSON.stringify(res));
+}
+
 function calcTrain(train, length, hours) {
     var init_cond = parseInt($("#init_cond").val());
     var condition = init_cond - (100 - train.reliability)*hours/24;
@@ -277,6 +355,9 @@ function registerCallbacks() {
     $("#add_train").click(function(){addTrain();});
     $("#add_stop").click(function(){addStop();});
     $("#remove_stop").click(function(){removeStop();});
+    $("#save").click(function(){save();});
+    $("#load").click(function(){showLoad();});
+    $("#do_load").click(function(){load();});
 }
 
 $(document).ready(function() {
