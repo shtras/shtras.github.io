@@ -77,10 +77,13 @@ function updateResult(id){
     var perHour = resPrice*(3600/time)*train.wagons;
     var income = perHour*hours;
     var servCost = approximateServicing(trainPrice, cond);
+    var tonsPerHour = (3600/time)*train.wagons/train.slots;
+    var tons = tonsPerHour * hours;
     $("#incomeph_"+id).val(perHour.toFixed(2));
     $("#income_"+id).val((income).toFixed(2));
     $("#condition_"+id).val(cond.toFixed(2));
     $("#trip_time_"+id).val(formatTime(time));
+    $("#tons_"+id).val(tons.toFixed(0));
     $("#servcost_"+id).val(servCost.toFixed(0));
     $("#net_income_"+id).val((income-servCost).toFixed(2));
     $("#net_income_slot_"+id).val((income/train.slots-servCost).toFixed(2));
@@ -106,6 +109,11 @@ function addResultBlock(id){
             .append(document.createTextNode('Avg trip time')))
         .append($("<div/>").attr("class", "right")
             .append($("<input/>").attr('id', 'trip_time_'+id).attr('readonly', '')))
+        .append($("<br/>"))
+        .append($("<div/>").attr("class", "left")
+            .append(document.createTextNode('Tons/slot')))
+        .append($("<div/>").attr("class", "right")
+            .append($("<input/>").attr('id', 'tons_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Condition')))
