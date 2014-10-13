@@ -18,18 +18,21 @@
 <script src="rail.js"></script>
 <link href="rail.css" rel="stylesheet" media="all" />
 <div class="box">
-    <div class="train_details" id="reference">
+    <div id="reference">
     <h2>Route definition</h2>
-    Select reference train: 
-    <select id="train_base"></select>
-    <br/>
+    <div style="vertical-align: top;" id='ref_train'>
+        Select reference train:<br/>
+    </div>
     </div><br/>
     <div class="left1">Condition: </div><div class="right"><input id="cond_base" value="100" /></div><br/>
     <div class="left1">Waiting time (mm:ss): </div><div class="right"><input id="wait_time"/></div><br/>
     <div class="left1">Total time (mm:ss): </div><div class="right"><input id="rtt"/></div><br/>
     <div class="left1">Route length: </div><div class="right"><input id="length" readonly /></div>
 </div>
-<div class="box" id="stops"><input type="submit" value="Add stop" id="add_stop" /><input type="submit" value="Remove stop" id="remove_stop" /><br/>
+<div class="box" id="stops">
+    <h2>Stops</h2>
+    <input type="submit" value="Add stop" id="add_stop" />
+    <input type="submit" value="Remove stop" id="remove_stop" /><br/>
 </div><br/>
 <div class="box">
 <h2>Calculate based on</h2>

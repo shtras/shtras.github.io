@@ -5,3 +5,4 @@ div.left{float: left; width: 100px; }
 div.left1{float: left; width: 150px; }
 div.right{float: left; }
 input[readonly]{background-color: cyan; }
+h2 {margin-top: 0; margin-bottom: 0; }

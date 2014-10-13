@@ -153,34 +153,41 @@ function removeStop() {
     updateAll();
 }
 
-function addTrain() {
-    var myCount = trainCount;
-    var select = $("<select/>").attr("id", 'train_'+myCount).change(function(){updateValues(myCount);updateResult(myCount);});
+function createTrainSelect(id, remButton) {
+    var select = $("<select/>").attr("id", 'train_'+id).change(function(){updateValues(id);updateResult(id);});
     for (var i in trains) {
         var train = trains[i];
         select.append($("<option></option>").attr("value", i).text(train.name));
     }
-    var trainBlock = $("<div/>").attr("class", "train_details").attr("id", "block_"+myCount).append(select)
+    var trainBlock = $("<div/>").attr("class", "train_details").attr("id", "block_"+id).append(select)
         .append($("<br/>"))
         .append($('<a/>').text('Show/hide details').attr('href', '#').click(function(event){
             event.preventDefault();
-            $('#details_'+myCount).toggle();
+            $('#details_'+id).toggle();
         })).append($('<br/>'));
     
-    var detailsDiv = $('<div/>').attr('id', 'details_'+myCount);
+    var detailsDiv = $('<div/>').attr('id', 'details_'+id);
     for (var i in values) {
         var value = values[i];
         detailsDiv
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode(value+': '))
         ).append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr("id", value+'_'+myCount).change(function(){updateResult(myCount);}))
+            .append($("<input/>").attr("id", value+'_'+id).change(function(){updateResult(id);}))
         ).append($("<br/>"));
     }
     detailsDiv.hide();
     trainBlock.append(detailsDiv);
-    trainBlock.append($("<input/>").attr('type', 'submit').val('Remove').click(function(){removeTrain(myCount);}));
-    trainBlock.append(addResultBlock(myCount));
+    if (remButton) {
+        trainBlock.append($("<input/>").attr('type', 'submit').val('Remove').click(function(){removeTrain(myCount);}));
+        trainBlock.append(addResultBlock(id));
+    }
+    return trainBlock;
+}
+
+function addTrain() {
+    var myCount = trainCount;
+    var trainBlock = createTrainSelect(myCount, true);
     $("#trains_select").append(trainBlock);
     updateValues(myCount);
     ++trainCount;
@@ -194,6 +201,9 @@ function updateAll() {
 }
 
 function initAll() {
+
+    var trainBlock = createTrainSelect('base', false);
+/*
     for (var i in trains) {
         var train = trains[i];
         $("#train_base").append($("<option></option>").attr("value", i).text(train.name));
@@ -209,7 +219,8 @@ function initAll() {
             .append($("<input/>").attr("id", value+"_base").change(function(){udateAll();}))
         ).append($("<br/>"));
     }
-    
+*/
+    $('#ref_train').append(trainBlock);
     for (var i in values) {
         var value = values[i];
         $("#desired")
