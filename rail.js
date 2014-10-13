@@ -204,12 +204,6 @@ function initAll() {
 
     var trainBlock = createTrainSelect('base', false);
     $('#ref_train').append(trainBlock);
-    for (var i in values) {
-        var value = values[i];
-        $("#desired")
-        .append(document.createTextNode(value+': '))
-        .append($("<input/>").attr("id", "des_"+value).change(function(){udateAll();}));
-    }
     addStop();
     updateValues('base');
 }
