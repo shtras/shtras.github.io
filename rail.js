@@ -10,6 +10,8 @@ var values = [
 
 var trainCount = 0;
 var stopCount = 1;
+var firstResult = 0;
+var firstResultIdx = -1;
 
 function getTime(label) {
     var parts = $(label).val().split(':');
@@ -56,6 +58,13 @@ function approximateServicing(price, condition){
 }
 
 function updateResult(id){
+    if (!$("#block_"+id).length) {
+        return;
+    }
+    if (id == firstResultIdx) {
+        updateAll();
+        return;
+    }
     var train = {
         speed: parseInt($("#speed_"+id).val()),
         acc: parseInt($("#acc_"+id).val()),
@@ -79,6 +88,16 @@ function updateResult(id){
     var servCost = approximateServicing(trainPrice, cond)/train.slots;
     var tonsPerHour = (3600/time)*train.wagons/train.slots;
     var tons = tonsPerHour * hours;
+    var result = income/train.slots-servCost;
+    var percent = 100;
+    
+    if (firstResultIdx == -1) {
+        firstResultIdx = id;
+        firstResult = result;
+    } else {
+        percent = result/firstResult*100;
+    }
+    
     $("#incomeph_"+id).val(perHour.toFixed(2));
     $("#income_"+id).val((income).toFixed(2));
     $("#condition_"+id).val(cond.toFixed(2));
@@ -86,11 +105,18 @@ function updateResult(id){
     $("#tons_"+id).val(tons.toFixed(0));
     $("#servcost_"+id).val(servCost.toFixed(0));
     $("#net_income_"+id).val((income-servCost).toFixed(2));
-    $("#net_income_slot_"+id).val((income/train.slots-servCost).toFixed(2));
+    $("#net_income_slot_"+id).val((result).toFixed(2));
+    $("#comparison_"+id).val((percent).toFixed(2)+'%');
 }
 
 function removeTrain(id){
+    if (!$("#block_"+id).length) {
+        return;
+    }
     $("#block_"+id).remove();
+    if (firstResultIdx == id) {
+        updateAll();
+    }
 }
 
 function addResultBlock(id){
@@ -133,7 +159,12 @@ function addResultBlock(id){
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Net Inc/slot')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'net_income_slot_'+id).attr('readonly', '')));
+            .append($("<input/>").attr('id', 'net_income_slot_'+id).attr('readonly', '')))
+        .append($("<br/>"))
+        .append($("<div/>").attr("class", "left")
+            .append(document.createTextNode('Comparison')))
+        .append($("<div/>").attr("class", "right")
+            .append($("<input/>").attr('id', 'comparison_'+id).attr('readonly', '')));
            
     return block;
 }
@@ -203,6 +234,8 @@ function addTrain() {
 
 function updateAll() {
     updateLength();
+    firstResultIdx = -1;
+    firstResult = 0;
     for (var i=0; i<trainCount; ++i) {
         updateResult(i);
     }
