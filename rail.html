@@ -29,9 +29,10 @@
     <div class="left1">Total time (mm:ss): </div><div class="right"><input id="rtt"/></div><br/>
     <div class="left1">Route length: </div><div class="right"><input id="length" readonly /></div>
 </div>
+<div class="box" id="stops"><input type="submit" value="Add stop" id="add_stop" /><input type="submit" value="Remove stop" id="remove_stop" /><br/>
+</div><br/>
 <div class="box">
 <h2>Calculate based on</h2>
-<div class="left1">Resource price: </div><div class="right"><input id="price"/></div><br/>
 <div class="left1">Hours ahead: </div><div class="right"><input id="hours" value="0" /></div><br/>
 <div class="left1">Initial condition: </div><div class="right"><input id="init_cond" value="100" /></div>
 </div>
@@ -41,10 +42,11 @@
 <div class="box">
 <h3>Usage:</h3>
 <ul>
-<li>Choose the route for which you want to compare the performance. Only the routes with a single stop are currently supported. If the route is long enough for the trains to fully accelerate the accuracy will be much better.
+<li>Choose the route for which you want to compare the performance. If every leg in the route is long enough for the trains to fully accelerate the accuracy will be much better.
 <li>Put one of your existing trains on that route and look at the <b>waiting time</b> and the <b>total time</b>.
 <li>Fill in the details of the train that you used as well as the times in the <b>Route definition</b> area.
-<li>Fill in additional data, such as the price of the resource that you want to use in the comparison.
+<li>Fill in additional data, such as the initial condition of the compared trains and for how many hours ahaed to calculate.
+<li>Use the <b>Add stop</b> button if your route has more than one stop. Additionaly fill in the price for every hauled resource.
 <li>Use the <b>Add train</b> button as many times as needed to add the trains that you wish to compare.
 <li>Select the desired trains and optionally change any of the details.
 <li>The results are there. Enjoy!

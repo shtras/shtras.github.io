@@ -7,7 +7,8 @@ var values = [
     'service',
 ];
 
-var trainCount=0;
+var trainCount = 0;
+var stopCount = 1;
 
 function getTime(label) {
     var parts = $(label).val().split(':');
@@ -25,7 +26,8 @@ function calcTrain(train, length, hours) {
     var averageCond = (init_cond-condition)/2+condition;
     var accTime = train.speed/train.acc;
     var speed = train.speed*averageCond/100;
-    var resTime = (length+speed*accTime-train.acc*accTime*accTime/2)/speed*2;
+    //(x + v*t1*numStops - (a*t1^2/2)*numStops)/v
+    var resTime = (length+speed*accTime*stopCount-train.acc*accTime*accTime/2*stopCount)/speed;
     return {time: resTime, cond: condition};
 }
 
@@ -33,12 +35,14 @@ function updateLength(){
     var cond = parseInt($("#cond_base").val());
     var wTime = getTime("#wait_time");
     var rtt = getTime("#rtt");
-    var oneWayTime = (rtt-wTime)/2;
+    var netTime = (rtt-wTime);
     var speed = $("#speed_base").val()*cond/100;
     var acc = $("#acc_base").val();
     var hours = parseInt($("#hours").val());
     var accTime = speed/acc;
-    var length = acc*accTime*accTime/2+speed*(oneWayTime-accTime);
+    //(a*t1^2/2)*numStops + v*t2
+    //t2 = t - t1*numStops;
+    var length = acc*accTime*accTime/2*stopCount+speed*(netTime-accTime*stopCount);
     $("#length").val(length.toFixed(2));
 }
 
@@ -63,7 +67,10 @@ function updateResult(id){
     var time = res.time;
     var cond = res.cond;
     time += getTime('#wait_time');
-    var resPrice = parseInt($("#price").val());
+    var resPrice = 0;
+    for (var i=1; i<stopCount; ++i) {
+        resPrice += parseInt($('#resprice_'+i).val());
+    }
     var trainPrice = parseInt($("#price_"+id).val());
     var perHour = resPrice*(3600/time)*train.wagons;
     var income = perHour*hours;
@@ -113,6 +120,29 @@ function addResultBlock(id){
             .append($("<input/>").attr('id', 'net_income_'+id).attr('readonly', '')));
            
     return block;
+}
+
+function addStop() {
+    var myCount = stopCount;
+    var stopBlock = $("<div/>").attr("class", "train_details").attr("id", "stop_"+myCount)
+    .append($("<div/>").attr("class", "left")
+        .append(document.createTextNode('Resource price: '))
+    ).append($("<div/>").attr("class", "right")
+        .append($("<input/>").attr("id", 'resprice_'+myCount).val(0).change(function(){updateAll();})));
+    $('#stops').append(stopBlock)
+    .append($('<br/>').attr('id', 'br_'+myCount));
+    ++stopCount;
+    updateAll();
+}
+
+function removeStop() {
+    if (stopCount == 1) {
+        return;
+    }
+    --stopCount;
+    $('#stop_'+stopCount).remove();
+    $('#br_'+stopCount).remove();
+    updateAll();
 }
 
 function addTrain() {
@@ -171,6 +201,7 @@ function initAll() {
         .append(document.createTextNode(value+': '))
         .append($("<input/>").attr("id", "des_"+value).change(function(){udateAll();}));
     }
+    addStop();
     updateValues('base');
 }
 
@@ -199,6 +230,8 @@ function registerCallbacks() {
     $("#hours").change(function(){updateAll();});
     $("#recalc").click(function(){updateAll();});
     $("#add_train").click(function(){addTrain();});
+    $("#add_stop").click(function(){addStop();});
+    $("#remove_stop").click(function(){removeStop();});
 }
 
 $(document).ready(function() {
