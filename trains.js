@@ -6,7 +6,6 @@ var trains = {
         wagons: 3,
         reliability: 60,
         price: 15000,
-        service: 0,
     },
     raven: {
         name: 'Raven',
@@ -15,7 +14,6 @@ var trains = {
         wagons: 4,
         reliability: 50,
         price: 35000,
-        service: 0,
     },
     rhino: {
         name: 'Rhinoceros',
@@ -24,7 +22,6 @@ var trains = {
         wagons: 4,
         reliability: 70,
         price: 70000,
-        service: 0,
     },
     donkey: {
         name: 'Donkey',
@@ -33,7 +30,6 @@ var trains = {
         wagons: 7,
         reliability: 40,
         price: 100000,
-        service: 0,
     },
     falcon: {
         name: 'Falcon',
@@ -42,7 +38,6 @@ var trains = {
         wagons: 4,
         reliability: 60,
         price: 135000,
-        service: 0,
     },
     mole: {
         name: 'Mole',
@@ -51,7 +46,6 @@ var trains = {
         wagons: 5,
         reliability: 80,
         price: 150000,
-        service: 0,
     },
     kite: {
         name: 'Red Kite',
@@ -60,7 +54,6 @@ var trains = {
         wagons: 6,
         reliability: 95,
         price: 0,
-        service: 0,
     },
     bat: {
         name: 'Bat',
@@ -69,7 +62,6 @@ var trains = {
         wagons: 6,
         reliability: 50,
         price: 165000,
-        service: 0,
     },
     panther: {
         name: 'Panther',
@@ -78,7 +70,6 @@ var trains = {
         wagons: 5,
         reliability: 85,
         price: 175000,
-        service: 0,
     },
     bear: {
         name: 'Black bear',
@@ -87,7 +78,6 @@ var trains = {
         wagons: 8,
         reliability: 60,
         price: 200000,
-        service: 0,
     },
     lynx: {
         name: 'Lynx',
@@ -96,7 +86,6 @@ var trains = {
         wagons: 5,
         reliability: 80,
         price: 150000,
-        service: 0,
     },
     boar: {
         name: 'Boar',
@@ -105,7 +94,6 @@ var trains = {
         wagons: 6,
         reliability: 50,
         price: 225000,
-        service: 0,
     },
     elephant: {
         name: 'Elephant',
@@ -114,7 +102,6 @@ var trains = {
         wagons: 11,
         reliability: 40,
         price: 300000,
-        service: 0,
     },
     bull: {
         name: 'Bull',
@@ -123,7 +110,6 @@ var trains = {
         wagons: 7,
         reliability: 90,
         price: 0,
-        service: 0,
     },
     odin: {
         name: 'Odin',
@@ -132,7 +118,6 @@ var trains = {
         wagons: 6,
         reliability: 80,
         price: 275000,
-        service: 0,
     },
     dionysos: {
         name: 'Dionysos',
@@ -141,7 +126,6 @@ var trains = {
         wagons: 5,
         reliability: 95,
         price: 200000,
-        service: 0,
     },
     heracles: {
         name: 'Heracles',
@@ -150,7 +134,6 @@ var trains = {
         wagons: 10,
         reliability: 80,
         price: 350000,
-        service: 0,
     },
     prometheus: {
         name: 'Prometheus',
@@ -159,7 +142,6 @@ var trains = {
         wagons: 8,
         reliability: 75,
         price: 375000,
-        service: 0,
     },
     morpheus: {
         name: 'Morpheus',
@@ -168,7 +150,6 @@ var trains = {
         wagons: 13,
         reliability: 80,
         price: 1000000,
-        service: 0,
         slots: 2,
     },
     osiris: {
@@ -178,7 +159,6 @@ var trains = {
         wagons: 7,
         reliability: 90,
         price: 500000,
-        service: 0,
     },
     apollo: {
         name: 'Apollo',
@@ -187,7 +167,6 @@ var trains = {
         wagons: 9,
         reliability: 70,
         price: 500000,
-        service: 0,
     },
     ares: {
         name: 'Ares',
@@ -196,7 +175,6 @@ var trains = {
         wagons: 6,
         reliability: 90,
         price: 600000,
-        service: 0,
     },
     neptune: {
         name: 'Neptune',
@@ -205,7 +183,6 @@ var trains = {
         wagons: 8,
         reliability: 80,
         price: 300000,
-        service: 0,
     },
     horus: {
         name: 'Horus',
@@ -214,7 +191,6 @@ var trains = {
         wagons: 10,
         reliability: 70,
         price: 750000,
-        service: 0,
     },
     thor: {
         name: 'Thor',
@@ -223,7 +199,6 @@ var trains = {
         wagons: 8,
         reliability: 75,
         price: 600000,
-        service: 0,
     },
     poseidon: {
         name: 'Poseidon',
@@ -232,7 +207,6 @@ var trains = {
         wagons: 22,
         reliability: 80,
         price: 2000000,
-        service: 0,
         slots: 3,
     },
 };

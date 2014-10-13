@@ -4,7 +4,6 @@ var values = [
     'wagons',
     'reliability',
     'price',
-    'service',
     'slots',
 ];
 
@@ -320,7 +319,6 @@ function updateAll() {
 }
 
 function initAll() {
-
     var trainBlock = createTrainSelect('base', false);
     $('#ref_train').append(trainBlock);
     addStop();
