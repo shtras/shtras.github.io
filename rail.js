@@ -28,7 +28,7 @@ function showLoad() {
 
 function serializeTrain(id) {
     var res = {name: $("#train_"+id+" option:selected").val()};
-    for (var i in values) {
+    for (var i=0; i<values.length; ++i) {
         res[values[i]] = $('#'+values[i]+'_'+id).val();
     }
     return res;
@@ -36,7 +36,7 @@ function serializeTrain(id) {
 
 function deserializeTrain(id, data) {
     $('#train_'+id).val(data.name);
-    for (var i in values) {
+    for (var i=0; i<values.length; ++i) {
         $('#'+values[i]+'_'+id).val(data[values[i]]);
     }
 }
@@ -271,8 +271,10 @@ function createTrainSelect(id, remButton) {
     var select = $("<select/>").attr("id", 'train_'+id).change(function(){updateValues(id);updateResult(id);});
     var i;
     for (i in trains) {
-        var train = trains[i];
-        select.append($("<option></option>").attr("value", i).text(train.name));
+        if (trains.hasOwnProperty(i)) {
+            var train = trains[i];
+            select.append($("<option></option>").attr("value", i).text(train.name));
+        }
     }
     var trainBlock = $("<div/>").attr("class", "train_details").attr("id", "block_"+id).append(select)
         .append($("<br/>"))
@@ -282,13 +284,14 @@ function createTrainSelect(id, remButton) {
         })).append($('<br/>'));
     
     var detailsDiv = $('<div/>').attr('id', 'details_'+id);
-    for (i in values) {
+    function resultUpdater(id){return function(){updateResult(id);};}
+    for (i=0; i<values.length; ++i) {
         var value = values[i];
         detailsDiv
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode(value+': '))
         ).append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr("id", value+'_'+id).change(function(){updateResult(id);}))
+            .append($("<input/>").attr("id", value+'_'+id).change(resultUpdater(id)))
         ).append($("<br/>"));
     }
     detailsDiv.hide();
@@ -331,7 +334,7 @@ function updateValues(suffix) {
         return;
     }
     
-    for (var i in values) {
+    for (var i=0; i<values.length; ++i) {
         var value = values[i];
         $('#'+value+'_'+suffix).val(train[value]);
     }
