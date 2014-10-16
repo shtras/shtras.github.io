@@ -284,7 +284,12 @@ function createTrainSelect(id, remButton) {
         })).append($('<br/>'));
     
     var detailsDiv = $('<div/>').attr('id', 'details_'+id);
-    function resultUpdater(id){return function(){updateResult(id);};}
+    var resultUpdater;
+    if (remButton) {
+        resultUpdater = function(id){return function(){updateResult(id);};}
+    } else {
+        resultUpdater = function(id){return function(){updateAll();};}
+    }
     for (i=0; i<values.length; ++i) {
         var value = values[i];
         detailsDiv
