@@ -294,7 +294,7 @@ var trains = {
     },
     hydra: {
         name: 'Larnaean Hydra',
-        speed: 30,
+        speed: 90,
         acc: 1,
         wagons: 30,
         reliability: 60,
@@ -304,7 +304,7 @@ var trains = {
         name: 'Olympus',
         speed: 150,
         acc: 12,
-        wagons: 95,
+        wagons: 85,
         reliability: 95,
         price: 10000000,
         slots: 5,
