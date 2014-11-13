@@ -260,8 +260,6 @@ var trains = {
         price: 5000000,
         slots:4,
     },
-    
-    
     ogre: {
         name: 'Ogre',
         speed: 130,
@@ -306,7 +304,7 @@ var trains = {
         name: 'Olympus',
         speed: 150,
         acc: 12,
-        wagons: 85,
+        wagons: 95,
         reliability: 95,
         price: 10000000,
         slots: 5,
