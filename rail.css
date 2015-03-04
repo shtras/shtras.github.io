@@ -1,8 +1,11 @@
 body {line-height: 25px; }
-div.box {background-color: cyan; padding: 5px; border: 5px solid #69b; display: inline-block; vertical-align: top; }
-div.train_details {border: 1px solid #69b; margin: 2px; padding-left: 5px; padding-right: 5px; display: inline-block; }
+div.box {background-color: cyan; padding: 5px; border: 5px solid #69b; display: inline-block; vertical-align: top; border-radius: 15px; margin: 1px;}
+div.train_details {background-color: cyan; border: 1px solid #69b; margin: 2px; padding-left: 5px; padding-right: 5px; padding-top: 2px; display: inline-block; border-radius: 5px;}
 div.left{float: left; width: 100px; }
 div.left1{float: left; width: 150px; }
 div.right{float: left; }
+input:not([type="submit"]){ border-radius: 10px 6px;}
+input[type="submit"]{ border-radius: 10px; cursor:pointer; padding: 2px; border:2px ridge grey; margin:2px;}
 input[readonly]{background-color: cyan; }
+select{border-radius: 5px;}
 h2 {margin-top: 0; margin-bottom: 0; }

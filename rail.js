@@ -199,47 +199,47 @@ function addResultBlock(id){
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Avg income/h')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'incomeph_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('type', 'text').attr('id', 'incomeph_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Total Income')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'income_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('type', 'text').attr('id', 'income_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Avg trip time')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'trip_time_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('type', 'text').attr('id', 'trip_time_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Tons/slot')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'tons_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('type', 'text').attr('id', 'tons_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Condition')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'condition_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('type', 'text').attr('id', 'condition_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Service/slot')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'servcost_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('type', 'text').attr('id', 'servcost_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Net Income')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'net_income_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('type', 'text').attr('id', 'net_income_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Net Inc/slot')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'net_income_slot_'+id).attr('readonly', '')))
+            .append($("<input/>").attr('type', 'text').attr('id', 'net_income_slot_'+id).attr('readonly', '')))
         .append($("<br/>"))
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode('Comparison')))
         .append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr('id', 'comparison_'+id).attr('readonly', '')));
+            .append($("<input/>").attr('type', 'text').attr('id', 'comparison_'+id).attr('readonly', '')));
            
     return block;
 }
@@ -250,7 +250,7 @@ function addStop() {
     .append($("<div/>").attr("class", "left")
         .append(document.createTextNode('Resource price: '))
     ).append($("<div/>").attr("class", "right")
-        .append($("<input/>").attr("id", 'resprice_'+myCount).val(0).change(function(){updateAll();})));
+        .append($("<input/>").attr('type', 'text').attr("id", 'resprice_'+myCount).val(0).change(function(){updateAll();})));
     $('#stops').append(stopBlock)
     .append($('<br/>').attr('id', 'br_'+myCount));
     ++stopCount;
@@ -296,7 +296,7 @@ function createTrainSelect(id, remButton) {
         .append($("<div/>").attr("class", "left")
             .append(document.createTextNode(value+': '))
         ).append($("<div/>").attr("class", "right")
-            .append($("<input/>").attr("id", value+'_'+id).change(resultUpdater(id)))
+            .append($("<input/>").attr('type', 'text').attr("id", value+'_'+id).change(resultUpdater(id)))
         ).append($("<br/>"));
     }
     detailsDiv.hide();
