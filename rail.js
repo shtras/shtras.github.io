@@ -103,10 +103,11 @@ function calcTrain(train, length, hours) {
     var init_cond = parseInt($("#init_cond").val(), 10);
     var condition = init_cond - (100 - train.reliability)*hours/24;
     var averageCond = (init_cond-condition)/2+condition;
-    var accTime = train.speed/train.acc;
+    var acc = train.acc*averageCond/100;
     var speed = train.speed*averageCond/100;
+    var accTime = speed/acc;
     //(x + v*t1*numStops - (a*t1^2/2)*numStops)/v
-    var resTime = (length+speed*accTime*stopCount-train.acc*accTime*accTime/2*stopCount)/speed;
+    var resTime = (length+speed*accTime*stopCount-acc*accTime*accTime/2*stopCount)/speed;
     return {time: resTime, cond: condition};
 }
 
@@ -116,7 +117,7 @@ function updateLength(){
     var rtt = getTime("#rtt");
     var netTime = (rtt-wTime);
     var speed = $("#speed_base").val()*cond/100;
-    var acc = $("#acc_base").val();
+    var acc = $("#acc_base").val()*cond/100;
     var accTime = speed/acc;
     //(a*t1^2/2)*numStops + v*t2
     //t2 = t - t1*numStops;
